@@ -1,10 +1,12 @@
-from models.users import Users
-from session import session
+# pylint: disable= missing-docstring
+from models.database import SQLDatabase
+
+db = SQLDatabase()
 
 
 class Authentication:
-    def check_auth(self, login_user: str, login_password: str) -> bool:
-        user = session.query(Users).filter_by(username=login_user).one()
-        if user.username == login_user and user.password == login_password:
+    def check_auth(self, username: str, password: str) -> bool:
+        user = db.get_user(username=username)
+        if user.username == username and user.password == password:
             return True
-        # return True
+        return False
